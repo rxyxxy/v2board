@@ -6,6 +6,8 @@ wget -P /etc/nginx/conf.d https://raw.githubusercontent.com/rxyxxy/v2board/docke
 git clone https://github.com/rxyxxy/v2board.git
 cd v2board && sh init.sh
 
+echo "$DATA" > .env
+
 chmod -R 755 *
 chown -R www-data:www-data *
 
