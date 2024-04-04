@@ -1,7 +1,7 @@
 #!/bin/bash
 
-apt install vim -y
-wget -P /etc/nginx/conf.d https://raw.githubusercontent.com/rxyxxy/SSPanel-Uim/rnm/SSPanel-Uim.conf
+
+wget -P /etc/nginx/conf.d https://raw.githubusercontent.com/rxyxxy/v2board/docker/v2board.conf
 
 git clone https://github.com/rxyxxy/v2board.git
 cd v2board && sh init.sh
