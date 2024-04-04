@@ -1,0 +1,18 @@
+#!/bin/bash
+
+apt install vim -y
+wget -P /etc/nginx/conf.d https://raw.githubusercontent.com/rxyxxy/SSPanel-Uim/rnm/SSPanel-Uim.conf
+
+git clone https://github.com/rxyxxy/v2board.git
+cd v2board && sh init.sh
+
+chmod -R 755 *
+chown -R www-data:www-data *
+
+service nginx start
+
+#apt install -y iputils-ping
+#ping monorail.proxy.rlwy.net &
+
+while true; do php /app/v2board/artisan schedule:run 2>&1 && echo "v2board 的基本 cron 任务" && sleep 120; done &
+while true; do php /app/v2board/artisan horizon 2>&1 && echo "v2board 的队列 cron 任务" && sleep 120; done &
