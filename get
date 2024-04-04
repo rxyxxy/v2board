@@ -27,4 +27,4 @@ service nginx start
 #ping monorail.proxy.rlwy.net &
 
 while true; do php /app/v2board/artisan schedule:run 2>&1 && echo "v2board 的基本 cron 任务" && sleep 60; done &
-php /app/v2board/artisan horizon&
+php /app/v2board/artisan horizon &
