@@ -4,7 +4,8 @@
 wget -P /etc/nginx/conf.d https://raw.githubusercontent.com/rxyxxy/v2board/docker/v2board.conf
 
 git clone https://github.com/rxyxxy/v2board.git
-cd v2board && sh init.sh
+cd v2board && rm -rf composer.phar && wget https://github.com/composer/composer/releases/latest/download/composer.phar -O composer.phar
+php composer.phar install -vvv
 
 echo "$DATA" > .env
 
