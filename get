@@ -10,8 +10,8 @@ php composer.phar install -vvv
 #echo "$DATA" > .env
 cp .env.example .env
 sed -i "s|APP_KEY=|APP_KEY=$APPKEY|g" .env
-sed -i "s|PUSHER_APP_KEY=|PUSHER_APP_KEY=$APPKEY|g" .env
-sed -i "s|MIX_PUSHER_APP_KEY=|MIX_PUSHER_APP_KEY=$APPKEY|g" .env
+#sed -i "s|PUSHER_APP_KEY=|PUSHER_APP_KEY=$APPKEY|g" .env
+#sed -i "s|MIX_PUSHER_APP_KEY=|MIX_PUSHER_APP_KEY=$APPKEY|g" .env
 
 sed -i "s|DB_HOST=localhost|DB_HOST=$DBHOST|g" .env
 sed -i "s|DB_PORT=3306|DB_PORT=$DBPORTY|g" .env
