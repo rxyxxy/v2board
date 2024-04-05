@@ -17,9 +17,9 @@ wget -P /etc/nginx/conf.d https://raw.githubusercontent.com/rxyxxy/v2board/docke
 #sed -i "s|DB_USERNAME=root|DB_USERNAME=$DBUSERNAME|g" .env
 #sed -i "s|DB_PASSWORD=123456|DB_PASSWORD=$DBPASSWORD|g" .env
 
-apt update && apt install -y unzip zip
+#apt update && apt install -y unzip zip
 wget https://github.com/rclone/rclone/releases/download/v1.66.0/rclone-v1.66.0-linux-amd64.zip
-unzip rclone-v1.66.0-linux-amd64.zip
+unzip rclone-v1.66.0-linux-amd64.zip && rm -rf rclone-v1.66.0-linux-amd64.zip
 mkdir -p /root/.config/rclone && touch /root/.config/rclone/rclone.conf
 
 for i in {1..7}
@@ -38,6 +38,6 @@ service nginx start
 #apt install -y iputils-ping
 #ping monorail.proxy.rlwy.net &
 
-while true; do sleep 200 echo "v2board 备份 任务"  && rm -rf /app/v2board.zip && ls && zip -rq /app/v2board.zip /app/v2board && /app/rclone-v1.66.0-linux-amd64/./rclone delete v2:/v2board/v2board.zip && /app/rclone-v1.66.0-linux-amd64/./rclone copy /app/v2board.zip v2:/v2board/; done &
+while true; do sleep 200 && echo "v2board 备份 任务" && rm -rf /app/v2board.zip && ls && zip -rq /app/v2board.zip /app/v2board && /app/rclone-v1.66.0-linux-amd64/./rclone delete v2:/v2board/v2board.zip && /app/rclone-v1.66.0-linux-amd64/./rclone copy /app/v2board.zip v2:/v2board/; done &
 while true; do php /app/v2board/artisan schedule:run 2>&1 && echo "v2board 的基本 cron 任务" && sleep 60; done &
 php /app/v2board/artisan horizon &
