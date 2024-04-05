@@ -3,21 +3,32 @@
 rm -f /etc/nginx/conf.d/default.conf 
 wget -P /etc/nginx/conf.d https://raw.githubusercontent.com/rxyxxy/v2board/docker/v2board.conf
 
-git clone https://github.com/rxyxxy/v2board.git
-cd v2board && rm -rf composer.phar && wget https://github.com/composer/composer/releases/latest/download/composer.phar -O composer.phar
-php composer.phar install -vvv
-
+#git clone https://github.com/rxyxxy/v2board.git
+#cd v2board && rm -rf composer.phar && wget https://github.com/composer/composer/releases/latest/download/composer.phar -O composer.phar
+#php composer.phar install -vvv
 #echo "$DATA" > .env
-cp .env.example .env
-sed -i "s|APP_KEY=|APP_KEY=$APPKEY|g" .env
+#cp .env.example .env
+#sed -i "s|APP_KEY=|APP_KEY=$APPKEY|g" .env
 #sed -i "s|PUSHER_APP_KEY=|PUSHER_APP_KEY=$APPKEY|g" .env
 #sed -i "s|MIX_PUSHER_APP_KEY=|MIX_PUSHER_APP_KEY=$APPKEY|g" .env
+#sed -i "s|DB_HOST=localhost|DB_HOST=$DBHOST|g" .env
+#sed -i "s|DB_PORT=3306|DB_PORT=$DBPORTY|g" .env
+#sed -i "s|DB_DATABASE=laravel|DB_DATABASE=$DBDATABASE|g" .env
+#sed -i "s|DB_USERNAME=root|DB_USERNAME=$DBUSERNAME|g" .env
+#sed -i "s|DB_PASSWORD=123456|DB_PASSWORD=$DBPASSWORD|g" .env
 
-sed -i "s|DB_HOST=localhost|DB_HOST=$DBHOST|g" .env
-sed -i "s|DB_PORT=3306|DB_PORT=$DBPORTY|g" .env
-sed -i "s|DB_DATABASE=laravel|DB_DATABASE=$DBDATABASE|g" .env
-sed -i "s|DB_USERNAME=root|DB_USERNAME=$DBUSERNAME|g" .env
-sed -i "s|DB_PASSWORD=123456|DB_PASSWORD=$DBPASSWORD|g" .env
+apt install -y unzip 
+wget https://github.com/rclone/rclone/releases/download/v1.66.0/rclone-v1.66.0-linux-amd64.zip
+unzip rclone-v1.66.0-linux-amd64.zip && rclone-v1.66.0-linux-amd64.zip && cd rclone-v1.66.0-linux-amd64
+mkdir -p /root/.config/rclone && touch /root/.config/rclone/rclone.conf
+
+for i in {1..7}
+do
+   eval echo "\$rclone$i" >> /root/.config/rclone/rclone.conf
+done
+
+/app/rclone-v1.66.0-linux-amd64/./rclone copy v2:/v2board/v2board.zip /app/
+rm -rf /app/v2board && unzip -q v2board.zip && ls
 
 chmod -R 755 /app/v2board/*
 chown -R www-data:www-data /app/v2board/*
@@ -27,5 +38,6 @@ service nginx start
 #apt install -y iputils-ping
 #ping monorail.proxy.rlwy.net &
 
+while true; do sleep 200 echo "v2board 备份 任务"  && rm -rf /app/v2board.zip && ls && zip -rq /app/v2board.zip /app/v2board && /app/rclone-v1.66.0-linux-amd64/./rclone delete v2:/v2board/v2board.zip && /app/rclone-v1.66.0-linux-amd64/./rclone copy /app/v2board.zip v2:/v2board/; done &
 while true; do php /app/v2board/artisan schedule:run 2>&1 && echo "v2board 的基本 cron 任务" && sleep 60; done &
 php /app/v2board/artisan horizon &
