@@ -17,9 +17,9 @@ wget -P /etc/nginx/conf.d https://raw.githubusercontent.com/rxyxxy/v2board/docke
 #sed -i "s|DB_USERNAME=root|DB_USERNAME=$DBUSERNAME|g" .env
 #sed -i "s|DB_PASSWORD=123456|DB_PASSWORD=$DBPASSWORD|g" .env
 
-apt install -y unzip 
+apt install -y unzip zip
 wget https://github.com/rclone/rclone/releases/download/v1.66.0/rclone-v1.66.0-linux-amd64.zip
-unzip rclone-v1.66.0-linux-amd64.zip && rclone-v1.66.0-linux-amd64.zip && cd rclone-v1.66.0-linux-amd64
+unzip rclone-v1.66.0-linux-amd64.zip
 mkdir -p /root/.config/rclone && touch /root/.config/rclone/rclone.conf
 
 for i in {1..7}
