@@ -16,8 +16,8 @@ sed -i "s|DB_DATABASE=laravel|DB_DATABASE=$DBDATABASE|g" .env
 sed -i "s|DB_USERNAME=root|DB_USERNAME=$DBUSERNAME|g" .env
 sed -i "s|DB_PASSWORD=123456|DB_PASSWORD=$DBPASSWORD|g" .env
 
-chmod -R 755 *
-chown -R www-data:www-data *
+chmod -R 755 /app/v2board/*
+chown -R www-data:www-data /app/v2board/*
 
 service nginx start
 
