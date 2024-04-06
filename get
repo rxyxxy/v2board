@@ -38,6 +38,6 @@ service nginx start
 #apt install -y iputils-ping
 #ping monorail.proxy.rlwy.net &
 
-while true; do sleep 330 && echo "v2board 备份 任务" && rm -rf /app/v2board.zip && ls && zip -rq v2board.zip v2board && /app/rclone-v1.66.0-linux-amd64/./rclone delete --drive-use-trash=false v2:/v2board/v2board.zip && /app/rclone-v1.66.0-linux-amd64/./rclone copy /app/v2board.zip v2:/v2board/ && echo "v2board备份完成"; done &
+while true; do sleep 1820 && echo "v2board 备份 任务" && rm -rf /app/v2board.zip && ls && zip -rq v2board.zip v2board && /app/rclone-v1.66.0-linux-amd64/./rclone delete --drive-use-trash=false v2:/v2board/v2board.zip && /app/rclone-v1.66.0-linux-amd64/./rclone copy /app/v2board.zip v2:/v2board/ && echo "v2board备份完成"; done &
 while true; do php /app/v2board/artisan schedule:run 2>&1 && echo "v2board 的基本 cron 任务" && sleep 60; done &
 while true; do php /app/v2board/artisan horizon && echo "v2board 的队列重启任务" && sleep 10; done &
